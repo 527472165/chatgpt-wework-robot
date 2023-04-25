@@ -4,8 +4,8 @@ services:
     name: Wework-Chatgpt
     env: node
     rootDir: .
-    autoDeploy: false
-    repo: https://github.com/sytpb/chatgpt-wework-robot # optional
+    autoDeploy: true
+    repo: https://github.com/527472165/chatgpt-wework-robot # optional
     region: singapore     # optional (defaults to oregon)
     plan: free            # optional (defaults to starter instance type)
     branch: main          # optional (defaults to master)
@@ -26,4 +26,6 @@ services:
       - key: OPENAI_API_KEY
         sync: false
       - key: SECRET
+        sync: false
+      - key: REDIS_CONNEC
         sync: false

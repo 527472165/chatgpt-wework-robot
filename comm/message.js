@@ -197,7 +197,10 @@ export default class Message {
 
         const options = {
             url: base.url + '/message/send?access_token=' + token,
-            form: JSON.stringify(texts)
+            form: JSON.stringify(texts),
+            headers: { 
+                'Content-Type': 'application/json;charset=utf-8'
+            } 
         };
 
         request.post(options, function (err, res, body) {
