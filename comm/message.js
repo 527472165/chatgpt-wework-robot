@@ -184,6 +184,7 @@ export default class Message {
     async sendMsg(answer, toUser) {
 
         const token = await getAccessToken();
+        console.log(token);
         const texts = {
             "touser": toUser,
             "msgtype": "text",
@@ -192,6 +193,7 @@ export default class Message {
                 "content": answer
             }
         };
+        console.log(texts)
 
         const options = {
             url: base.url + '/message/send?access_token=' + token,
