@@ -183,6 +183,9 @@ export default class Message {
     /*active message*/
     async sendMsg(answer, toUser) {
 
+        answer = answer.replace("(\n","( \n");
+        console.log(answer);
+
         const token = await getAccessToken();
         console.log(token);
         const texts = {
@@ -197,10 +200,7 @@ export default class Message {
 
         const options = {
             url: base.url + '/message/send?access_token=' + token,
-            form: JSON.stringify(texts),
-            headers: { 
-                'Content-Type': 'application/json;charset=utf-8'
-            } 
+            form: JSON.stringify(texts)
         };
 
         request.post(options, function (err, res, body) {
