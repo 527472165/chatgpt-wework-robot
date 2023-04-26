@@ -27,3 +27,5 @@ services:
         sync: false
       - key: SECRET
         sync: false
+      - key: REDIS
+        sync: false
