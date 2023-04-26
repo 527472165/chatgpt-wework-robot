@@ -32,7 +32,7 @@ export default class TextChat extends Chat {
         var questionArr = [];
         var historyMess = await client.get(toUser);
         if (historyMess !== null) {
-            questionArr.push(JSON.parse(historyMess));
+            questionArr = JSON.parse(historyMess);
         }
         //构建message传入API  数组
         questionArr.push({ role: 'user', content: question });
@@ -50,6 +50,9 @@ export default class TextChat extends Chat {
                 questionArr.splice(leng - 1);
             }
         });
+        if (questionArr.length > 10){
+            questionArr = questionArr[questionArr.length - 10];
+        }
         await client.set(toUser, JSON.stringify(questionArr));
         //保存消息到Redis中，包括问题与回答
         await client.disconnect();
