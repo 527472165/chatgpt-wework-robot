@@ -182,9 +182,8 @@ export default class Message {
 
     /*active message*/
     async sendMsg(answer, toUser) {
-
-        answer = answer.replace("(\n","( \n");
         console.log(answer);
+        var someEncodedString = Buffer.from(answer, 'utf-8').toString();
 
         const token = await getAccessToken();
         console.log(token);
