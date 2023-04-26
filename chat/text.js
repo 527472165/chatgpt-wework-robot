@@ -26,7 +26,7 @@ export default class TextChat extends Chat{
         message.reply(res, { type: 'text', content: '正在生成回答...' }, toUser);
 
         //用Redis中获取用户上下文 toUser
-        const client = redis.createClient({ url: this.process.env.REDIS});
+        const client = redis.createClient({ url: process.env.REDIS});
         client.connect();
         var questionArr = [];
         var historyMess = await client.get(toUser);
