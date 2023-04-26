@@ -24,7 +24,7 @@ export default class TextChat extends Chat {
 
         debug.log(question);
         const message = new Message();
-        message.reply(res, { type: 'text', content: '正在生成回答...' }, toUser);
+        message.reply(res, { type: 'text', content: '正在生成回答' }, toUser);
 
         //用Redis中获取用户上下文 toUser
         const client = redis.createClient({ url: process.env.REDIS });
@@ -47,12 +47,12 @@ export default class TextChat extends Chat {
                 message.sendMsg(answer, toUser);
             } else {
                 var leng = questionArr.length;
-                questionArr.splice(leng - 1);
+                questionArr.splice(0, leng - 1);
             }
         });
-        // if (questionArr.length > 10){
-        //     questionArr = questionArr[questionArr.length - 10];
-        // }
+        if (questionArr.length > process.env.MAX) {
+            questionArr = questionArr.splice(questionArr.length - process.env.MAX, questionArr.length);
+        }
         await client.set(toUser, JSON.stringify(questionArr));
         //保存消息到Redis中，包括问题与回答
         await client.disconnect();
