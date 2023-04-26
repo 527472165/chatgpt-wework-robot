@@ -12,7 +12,7 @@ export default class Conversation {
     async urlconfig(req, res) {
             // 连接 Redis
             const client =redis.createClient({url: process.env.REDIS});
-            client.on('error', err => console.log('Redis Client Error', err));
+            // client.on('error', err => console.log('Redis Client Error', err));
             await client.connect();
             console.log(client.isOpen);
             console.log(client.isReady);
