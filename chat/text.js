@@ -10,7 +10,7 @@ import getAIChat from "../service/openai.js"
 /**redis */
 import redis from 'redis';
 import { config } from "dotenv";
-config()
+config()    
 export default class TextChat extends Chat{
   
     constructor(name) {
@@ -42,15 +42,13 @@ export default class TextChat extends Chat{
                 const answer = content;
                 debug.log(answer);
                 console.log(answer);
+                questionArr.push({role:'assistant',content:answer});
+                await client.set(toUser, JSON.stringify(questionArr));
                 //调用企业微信接口，推送消息给用户
                 message.sendMsg(answer, toUser);
-                questionArr.push({role:'assistant',content:answer});
             }
         });
-        //todo 优化数组
-
         //保存消息到Redis中，包括问题与回答
-        await client.set(toUser, JSON.stringify(questionArr));
         await client.disconnect();
     }
 
