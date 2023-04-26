@@ -16,7 +16,7 @@ export default class Conversation {
             await client.connect();
             console.log(client.isOpen);
             console.log(client.isReady);
-            await redis.set('abcd','11111');
+            await client.set('abcd','11111');
             const value = await client.get('abcd');
             console.log(value) 
             await client.disconnect();
