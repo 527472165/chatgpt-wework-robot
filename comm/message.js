@@ -193,8 +193,8 @@ export default class Message {
                 "content": answer
             }
         };
-        console.log(texts);
         var mess = Buffer.from(JSON.stringify(texts), 'utf-8').toString();
+        console.log(mess);
         const options = {
             url: base.url + '/message/send?access_token=' + token,
             form: mess,
