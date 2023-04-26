@@ -31,7 +31,7 @@ export default class TextChat extends Chat{
         client.connect();
         var questionArr = [];
         var historyMess = await client.get(toUser);
-        if (result != nill) {
+        if (result !== "" || result !== null) {
             questionArr.push(JSON.parse(historyMess));
         }
         //构建message传入API  数组
