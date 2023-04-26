@@ -50,9 +50,9 @@ export default class TextChat extends Chat {
                 questionArr.splice(leng - 1);
             }
         });
-        if (questionArr.length > 10){
-            questionArr = questionArr[questionArr.length - 10];
-        }
+        // if (questionArr.length > 10){
+        //     questionArr = questionArr[questionArr.length - 10];
+        // }
         await client.set(toUser, JSON.stringify(questionArr));
         //保存消息到Redis中，包括问题与回答
         await client.disconnect();
