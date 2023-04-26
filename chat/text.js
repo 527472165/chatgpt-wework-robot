@@ -7,6 +7,9 @@ import debug from "../comm/debug.js";
 import Message from "../comm/message.js";
 import getAIChat from "../service/openai.js"
 
+/**redis */
+import redis from 'redis';
+
 export default class TextChat extends Chat{
   
     constructor(name) {
@@ -14,25 +17,40 @@ export default class TextChat extends Chat{
     }
 
     process(xml, res) {
-
         debug.log("text chat...", xml);
         const question = xml?.Content[0];
         const toUser = xml?.FromUserName[0];
 
         debug.log(question);
         const message = new Message();
-        message.reply(res, { type: 'text', content: '正在生成回答' }, toUser);
+        message.reply(res, { type: 'text', content: '正在生成回答...' }, toUser);
 
-        getAIChat(question).then(result => {
+        //用Redis中获取用户上下文 toUser
+        const client = redis.createClient({ url: this.process.env.REDIS});
+        client.connect();
+        var questionArr = [];
+        var historyMess = await client.get(toUser);
+        if (result != nill) {
+            questionArr.push(JSON.parse(historyMess));
+        }
+        //构建message传入API  数组
+        questionArr.push({role:'user',content:question});
+
+        getAIChat(questionArr).then(result => {
             const content = result?.data?.choices[0]?.message?.content;
-            if(!!content) {
+            if (!!content) {
                 const answer = content;
-
                 debug.log(answer);
                 console.log(answer);
+                //调用企业微信接口，推送消息给用户
                 message.sendMsg(answer, toUser);
             }
         })
+        //todo questiionArr 做限制
+
+        //保存消息到Redis中，包括问题与回答
+        await client.set(toUser, JSON.stringify(questionArr));
+        await client.disconnect();
     }
 
 }
