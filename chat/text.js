@@ -36,7 +36,7 @@ export default class TextChat extends Chat{
         }
         //构建message传入API  数组
         questionArr.push({role:'user',content:question});
-        var res = getAIChat(questionArr).then(result => {
+        getAIChat(questionArr).then(result => {
             const content = result?.data?.choices[0]?.message?.content;
             if (!!content) {
                 const answer = content;
@@ -44,7 +44,7 @@ export default class TextChat extends Chat{
                 console.log(answer);
                 //调用企业微信接口，推送消息给用户
                 message.sendMsg(answer, toUser);
-                questionArr.push({role:'assistant',content:res});
+                questionArr.push({role:'assistant',content:answer});
                 //todo questiionArr 做限制
         
    
