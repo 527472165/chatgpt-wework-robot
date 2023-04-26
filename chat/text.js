@@ -47,10 +47,11 @@ export default class TextChat extends Chat{
                 questionArr.push({role:'assistant',content:res});
                 //todo questiionArr 做限制
         
-                //保存消息到Redis中，包括问题与回答
-                await client.set(toUser, JSON.stringify(questionArr));
+   
             }
         });
+        //保存消息到Redis中，包括问题与回答
+        await client.set(toUser, JSON.stringify(questionArr));
         await client.disconnect();
     }
 
