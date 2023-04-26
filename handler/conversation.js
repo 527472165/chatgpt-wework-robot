@@ -2,7 +2,6 @@
 import debug from "../comm/debug.js";
 import Message from "../comm/message.js";
 import TextChat from "../chat/text.js";
-import redis from 'redis';
 
 export default class Conversation {
   
@@ -10,18 +9,8 @@ export default class Conversation {
     }
 
     async urlconfig(req, res) {
-            // 连接 Redis
-            const client =redis.createClient({url: process.env.REDIS});
-            // client.on('error', err => console.log('Redis Client Error', err));
-            await client.connect();
-            console.log(client.isOpen);
-            console.log(client.isReady);
-            await client.set('abcd','11111');
-            const value = await client.get('abcd');
-            console.log(value) 
-            await client.disconnect();
-            const message = new Message();
-            message.urlSetting(req, res);
+        const message = new Message();
+        message.urlSetting(req, res);
     }
 
     async process(body, res) {
