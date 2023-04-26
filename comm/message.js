@@ -183,7 +183,7 @@ export default class Message {
     /*active message*/
     async sendMsg(answer, toUser) {
         console.log(answer);
-        var someEncodedString = Buffer.from(answer, 'utf-8').toString();
+        answer = Buffer.from(answer, 'utf-8').toString();
 
         const token = await getAccessToken();
         console.log(token);
