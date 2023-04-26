@@ -9,12 +9,12 @@ const configuration = new Configuration({
 
 const openai = new OpenAIApi(configuration);
 
-const getAIChat = async (question) => {
+const getAIChat = async (getAIChat) => {
     
     try {
         const res = await openai.createChatCompletion({
             model: models[2],
-            messages:[{role:"user",content: question}]
+            messages:getAIChat
         })
         return res;
     }
