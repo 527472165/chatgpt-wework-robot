@@ -195,7 +195,7 @@ export default class Message {
         console.log(texts)
         const options = {
             url: base.url + '/message/send?access_token=' + token,
-            form: JSON.stringify(texts)
+            body: JSON.stringify(texts)
         };
 
         request.post(options, function (err, res, body) {
