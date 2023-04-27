@@ -182,7 +182,6 @@ export default class Message {
 
     /*active message*/
     async sendMsg(answer, toUser) {
-        console.log(answer);
         const token = await getAccessToken();
         console.log(token);
         const texts = {
@@ -193,14 +192,10 @@ export default class Message {
                 "content": answer
             }
         };
-        var mess = Buffer.from(JSON.stringify(texts), 'utf-8').toString();
-        console.log(mess);
+        console.log(texts)
         const options = {
             url: base.url + '/message/send?access_token=' + token,
-            form: mess,
-            headers:{
-                'Content-type':'application/json;charset=utf-8'
-            }
+            form: JSON.stringify(texts)
         };
 
         request.post(options, function (err, res, body) {

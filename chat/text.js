@@ -29,6 +29,7 @@ export default class TextChat extends Chat {
         //用Redis中获取用户上下文 toUser
         const client = redis.createClient({ url: process.env.REDIS });
         client.connect();
+        console.log('IsReady:' + client.isReady);
         var questionArr = [];
         var historyMess = await client.get(toUser);
         if (historyMess !== null) {
@@ -40,12 +41,13 @@ export default class TextChat extends Chat {
             const content = result?.data?.choices[0]?.message?.content;
             if (!!content) {
                 const answer = content;
-                debug.log(answer);
                 console.log(answer);
                 questionArr.push({ role: 'assistant', content: answer });
                 //调用企业微信接口，推送消息给用户
                 message.sendMsg(answer, toUser);
             } else {
+                const errmess = '限制：3/分钟。请在20秒后再试。';
+                message.sendMsg(errmess, toUser);
                 var leng = questionArr.length;
                 questionArr.splice(0, leng - 1);
             }
