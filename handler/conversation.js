@@ -2,6 +2,7 @@
 import debug from "../comm/debug.js";
 import Message from "../comm/message.js";
 import TextChat from "../chat/text.js";
+import getAIChat from "../service/openai.js"
 
 export default class Conversation {
   
@@ -37,5 +38,22 @@ export default class Conversation {
         //debug.log("Not support msgtype []");
     }
 
+    async invoke(body,res){
+        console.log(body);
+        var answer;
+        getAIChat(body).then(result => {
+            const content = result?.data?.choices[0]?.message?.content;
+            if (!!content) {
+                answer = content;
+                console.log(answer);
+                res.write(answer);
+                res.status(200).end();
+            } else {
+                answer = '限制：3/分钟。请在20秒后再试。';
+                res.write(answer);
+                res.status(200).end();
+            }
+        });
+    }
     
 }
