@@ -2,7 +2,7 @@
 import debug from "../comm/debug.js";
 import Message from "../comm/message.js";
 import TextChat from "../chat/text.js";
-import getAIChat from "../service/openai.js"
+import getAIChat1 from "../service/openai1.js"
 
 export default class Conversation {
   
@@ -41,7 +41,9 @@ export default class Conversation {
     async invoke(body,res){
         console.log(body);
         var answer;
-        getAIChat(body).then(result => {
+        var questionArr = [];
+        questionArr = JSON.parse(body.message);
+        getAIChat1(questionArr,body.openaiApiKey).then(result => {
             const content = result?.data?.choices[0]?.message?.content;
             if (!!content) {
                 answer = content;
