@@ -39,10 +39,11 @@ export default class Conversation {
     }
 
     async invoke(body,res){
-        console.log(body);
+        console.log(body.message);
         var answer;
         var questionArr = [];
-        questionArr = JSON.parse(body.message);
+        questionArr = body.message;
+        console.log(questionArr);
         getAIChat1(questionArr,body.openaiApiKey).then(result => {
             const content = result?.data?.choices[0]?.message?.content;
             if (!!content) {
