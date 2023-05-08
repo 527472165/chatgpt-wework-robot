@@ -46,14 +46,15 @@ export default class Conversation {
             if (!!content) {
                 answer = content;
                 console.log(answer);
-                res.write(answer);
-                res.status(200).end();
             } else {
                 answer = '限制：3/分钟。请在20秒后再试。';
-                res.write(answer);
-                res.status(200).end();
             }
+            var result = {
+                code:200,
+                message:answer
+            }
+            res.write(JSON.stringify(result));
+            res.status(200).end();
         });
-    }
-    
+    }  
 }
