@@ -28,6 +28,31 @@ app.use('/message',conversation);
 
 app.use('/chatApi',conversation1);
 
+<<<<<<< HEAD
+=======
+app.post('/chat', (req, res) => {
+    const messages = req.body.messages;
+    const key = req.body.openaiApiKey;
+    const options = {
+    url: 'https://api.openai.com/v1/chat/completions',
+    method: 'POST',
+    headers: {
+			"Authorization": "Bearer "+key,
+			"Content-Type": "application/json",
+    },
+    json: {
+			"model": "gpt-3.5-turbo",
+			"stream": true,
+			"messages": messages
+    }
+  };
+	const proxyReq = request(options);
+    proxyReq.on('response', function(response) {
+    response.pipe(res);
+  });
+});
+
+>>>>>>> 83d07ab8c25a5d6a1c591c40ff870a6f74781fa6
 /*init access_token*/
 initAccessToken();
 
