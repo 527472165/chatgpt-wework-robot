@@ -7,6 +7,7 @@ import bodyParserXml from 'body-parser-xml';
 import { initAccessToken } from "./comm/config.js";
 import conversation from "./route/conversation.js";
 import conversation1 from "./route/conversation1.js";
+import { constants } from "crypto";
 
 
 config();
@@ -27,7 +28,30 @@ app.get('/healthz', function (req, res, next) {
 
 app.use('/message',conversation);
 
-app.use('/chatApi',conversation1)
+app.use('/chatApi',conversation1);
+
+app.post('/chat', (req, res) => {
+	const messages = [];
+    messages = req.body.messages;
+    const key = req.body.openaiApiKey;
+    const options = {
+    url: 'https://api.openai.com/v1/chat/completions',
+    method: 'POST',
+    headers: {
+			"Authorization": "Bearer "+key,
+			"Content-Type": "application/json",
+    },
+    json: {
+			"model": "gpt-3.5-turbo",
+			"stream": true,
+			"messages": messages
+    }
+  };
+	const proxyReq = request(options);
+    proxyReq.on('response', function(response) {
+    response.pipe(res);
+  });
+});
 
 /*init access_token*/
 initAccessToken();

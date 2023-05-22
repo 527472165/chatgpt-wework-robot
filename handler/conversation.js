@@ -20,7 +20,7 @@ export default class Conversation {
         const data = body;
         const message = new Message();
         const xml = await message.decode(data);        
-        const msgType = xml?.MsgType[0];
+        const msgType = xml?.MsgType[0];S
         debug.log(msgType,xml);
 
         if(msgType === "text") {
@@ -56,6 +56,7 @@ export default class Conversation {
                 code:200,
                 message:answer
             }
+            res.setHeader('Content-type','application/octet-stream')
             res.write(JSON.stringify(result));
             res.status(200).end();
         });
