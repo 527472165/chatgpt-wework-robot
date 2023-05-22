@@ -56,7 +56,6 @@ export default class Conversation {
                 code:200,
                 message:answer
             }
-            res.setHeader('Content-type','application/octet-stream')
             res.write(JSON.stringify(result));
             res.status(200).end();
         });
