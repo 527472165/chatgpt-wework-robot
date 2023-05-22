@@ -31,8 +31,7 @@ app.use('/message',conversation);
 app.use('/chatApi',conversation1);
 
 app.post('/chat', (req, res) => {
-	const messages = [];
-    messages = req.body.messages;
+    const messages = req.body.messages;
     const key = req.body.openaiApiKey;
     const options = {
     url: 'https://api.openai.com/v1/chat/completions',
