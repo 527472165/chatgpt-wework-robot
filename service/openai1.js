@@ -13,8 +13,8 @@ const openai = new OpenAIApi(configuration);
     try {
         const res = await openai.createChatCompletion({
             model: models[2],
-            messages:getAIChat,
-            stream:true
+            messages:getAIChat
+//             stream:true
         })
         return res;
     }
