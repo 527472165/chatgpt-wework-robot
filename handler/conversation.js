@@ -20,7 +20,7 @@ export default class Conversation {
         const data = body;
         const message = new Message();
         const xml = await message.decode(data);        
-        const msgType = xml?.MsgType[0];S
+        const msgType = xml?.MsgType[0];
         debug.log(msgType,xml);
 
         if(msgType === "text") {
