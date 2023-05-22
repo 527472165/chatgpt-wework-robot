@@ -45,19 +45,19 @@ export default class Conversation {
         questionArr = body.message;
         console.log(questionArr);
         getAIChat1(questionArr,body.openaiApiKey).then(result => {
-            console.log(result);
-            // const content = result?.data?.choices[0]?.message?.content;
-            // if (!!content) {
-            //     answer = content;
-            //     console.log(answer);
-            // } else {
-            //     answer = '限制：3/分钟。请在20秒后再试。';
-            // }
-            // var result = {
-            //     code:200,
-            //     message:answer
-            // }
-            // res.write(JSON.stringify(result));
+//             console.log(result);
+            const content = result?.data?.choices[0]?.message?.content;
+            if (!!content) {
+                answer = content;
+                console.log(answer);
+            } else {
+                answer = '限制：3/分钟。请在20秒后再试。';
+            }
+            var result = {
+                code:200,
+                message:answer
+            }
+            res.write(JSON.stringify(result));
             res.status(200).end();
         });
     }  
