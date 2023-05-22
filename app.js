@@ -14,8 +14,8 @@ config();
 bodyParserXml(bodyParser);
 
 const app = express();
-const PORT = process.env.PORT;
-// const PORT = 6060;
+// const PORT = process.env.PORT;
+const PORT = 6060;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -31,8 +31,7 @@ app.use('/message',conversation);
 app.use('/chatApi',conversation1);
 
 app.post('/chat', (req, res) => {
-	const messages = [];
-    messages = req.body.messages;
+	const messages = req.body.messages;
     const key = req.body.openaiApiKey;
     const options = {
     url: 'https://api.openai.com/v1/chat/completions',
